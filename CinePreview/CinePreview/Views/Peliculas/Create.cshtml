@@ -1,0 +1,39 @@
+﻿@model CinePreview.Data.Entidades.Pelicula
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h5>Crear Pelicula</h5>
+<hr />
+<div class=" row">
+    <div class=" col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class=" text-danger"></div>
+            <div class=" form-group">
+                <label asp-for="Titulo" class="control-label"></label>
+                <input asp-for="Titulo" class="form-control" />
+                <span asp-validation-for="Titulo" class="text-danger"></span>
+            </div>
+            <div class=" form-group">
+                <label asp-for="Genero" class="control-label"></label>
+                <input asp-for="Genero" class="form-control" />
+                <span asp-validation-for="Genero" class="text-danger"></span>
+            </div>
+            <div class=" form-group">
+                <label asp-for="Duracion" class="control-label"></label>
+                <input asp-for="Duracion" class="form-control" />
+                <span asp-validation-for="Duracion" class="text-danger"></span>
+            </div>
+            <div class=" form-group">
+                <label asp-for="FechaEstreno" class="control-label"></label>
+                <input asp-for="FechaEstreno" class="form-control" />
+                <span asp-validation-for="FechaEstreno" class="text-danger"></span>
+            </div>
+            <div class=" form-group">
+                <button type ="submit" class=" btn btn-success">Guardar</button>
+                <button type="button" class=" btn btn-primary">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+

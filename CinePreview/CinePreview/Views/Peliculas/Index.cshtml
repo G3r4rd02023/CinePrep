@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CinePreview.Data.Entidades.Pelicula>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
+</p>
+
+<div class=" row">
+    <div class="col-md-12">
+        <div class=" panel panel-default">
+            <div class=" panel-heading">
+                <h3 class=" panel-tittle">Peliculas</h3>
+            </div>
+            <div class=" panel-body">
+                <table class="table table-hover table responsive table stripped" id="myTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Titulo)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Genero)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Duracion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FechaEstreno)
+                            </th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Titulo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Genero.Descripcion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Duracion)
+                                </td>
+                                <td>
+                                    @item.FechaEstreno.Date.ToString("dd-MM-yyyy")
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
+                                    <a asp-action ="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
