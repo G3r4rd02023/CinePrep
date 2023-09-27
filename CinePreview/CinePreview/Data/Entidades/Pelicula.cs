@@ -9,8 +9,8 @@ namespace CinePreview.Data.Entidades
         [Display(Name = "Titulo")]
         [MaxLength(200, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public string Titulo { get; set; } = null!;
-        public Genero Genero { get; set; } = null!;
+        public string Titulo { get; set; } 
+        public Genero Genero { get; set; } 
         
         [Display(Name = "Duración")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]

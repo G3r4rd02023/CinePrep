@@ -21,7 +21,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.Descripcion)
                             </th>
-                            
+
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -31,7 +31,7 @@
                             <tr>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Descripcion)
-                                </td>                                                              
+                                </td>
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
                                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
@@ -44,4 +44,3 @@
         </div>
     </div>
 </div>
-

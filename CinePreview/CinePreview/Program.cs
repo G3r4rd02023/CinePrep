@@ -1,4 +1,5 @@
 using CinePreview.Data;
+using CinePreview.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace CinePreview
@@ -15,6 +16,7 @@ namespace CinePreview
             {
                 o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            builder.Services.AddScoped<ICombosHelper, CombosHelper>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

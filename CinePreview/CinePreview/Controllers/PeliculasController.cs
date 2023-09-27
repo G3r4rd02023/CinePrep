@@ -1,18 +1,21 @@
 ﻿using CinePreview.Data;
 using CinePreview.Data.Entidades;
+using CinePreview.Helpers;
+using CinePreview.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Metrics;
 
 namespace CinePreview.Controllers
 {
     public class PeliculasController : Controller
     {
         private readonly DataContext _context;
+        private readonly ICombosHelper _combosHelper;
 
-        public PeliculasController(DataContext context)
+        public PeliculasController(DataContext context, ICombosHelper combosHelper)
         {
-            _context = context;           
+            _context = context;
+            _combosHelper = combosHelper;
         }
 
         public async Task<IActionResult> Index()
@@ -22,29 +25,46 @@ namespace CinePreview.Controllers
                 .ToListAsync());
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            CrearPeliculaViewModel model = new()
+            {
+                Generos = await _combosHelper.GetComboGenerosAsync(),
+            };
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Pelicula pelicula)
+        public async Task<IActionResult> Create(CrearPeliculaViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
+                var genero = await _context.Generos.FindAsync(model.GeneroId);
+                if (genero == null)
+                {
+                    return NotFound();
+                }
+                Pelicula pelicula = new()
+                {
+                    Titulo = model.Titulo,
+                    Duracion = model.Duracion,
+                    Genero = genero,
+                    FechaEstreno = model.FechaEstreno,
+                };
                 try
                 {
                     _context.Add(pelicula);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
-                }                
+                }
                 catch (Exception exception)
                 {
                     ViewBag.Error(exception.Message);
                 }
             }
-            return View(pelicula);
+            
+            return View(model);
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -54,19 +74,34 @@ namespace CinePreview.Controllers
                 return NotFound();
             }
 
-            var pelicula = await _context.Peliculas.FindAsync(id);
+           
+
+            var pelicula = await _context.Peliculas                                
+                .FindAsync(id);
+
             if (pelicula == null)
             {
                 return NotFound();
             }
-            return View(pelicula);
+
+            
+
+            CrearPeliculaViewModel model = new()
+            {
+                Id = pelicula.Id,
+                Titulo = pelicula.Titulo,
+                Duracion = pelicula.Duracion,                                
+                FechaEstreno = pelicula.FechaEstreno,
+                Generos = await _combosHelper.GetComboGenerosAsync()
+            };
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Pelicula pelicula)
+        public async Task<IActionResult> Edit(int id, CrearPeliculaViewModel model)
         {
-            if (id != pelicula.Id)
+            if (id != model.Id)
             {
                 return NotFound();
             }
@@ -75,16 +110,31 @@ namespace CinePreview.Controllers
             {
                 try
                 {
-                    _context.Update(pelicula);                   
+                    var genero = await _context.Generos.FindAsync(model.GeneroId);
+                    if (genero == null)
+                    {
+                        return NotFound();
+                    }
+
+                    var pelicula = new Pelicula
+                    {
+                        Id = model.Id,
+                        Titulo = model.Titulo,
+                        Duracion = model.Duracion,
+                        Genero = genero,
+                        FechaEstreno = model.FechaEstreno
+                    };
+                    _context.Update(pelicula);
                     await _context.SaveChangesAsync();
-                }                
+                }
                 catch (Exception exception)
                 {
                     ViewBag.Error(exception.Message);
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(pelicula);
+            model.Generos = await _combosHelper.GetComboGenerosAsync();
+            return View(model);
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -105,7 +155,7 @@ namespace CinePreview.Controllers
             try
             {
                 _context.Peliculas.Remove(pelicula);
-                await _context.SaveChangesAsync();               
+                await _context.SaveChangesAsync();
             }
             catch
             {

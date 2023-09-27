@@ -46,17 +46,17 @@ namespace CinePreview.Controllers
 
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Peliculas == null)
+            if (id == null || _context.Generos == null)
             {
                 return NotFound();
             }
 
-            var pelicula = await _context.Peliculas.FindAsync(id);
-            if (pelicula == null)
+            var genero = await _context.Generos.FindAsync(id);
+            if (genero == null)
             {
                 return NotFound();
             }
-            return View(pelicula);
+            return View(genero);
         }
 
         [HttpPost]

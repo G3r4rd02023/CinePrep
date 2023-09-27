@@ -1,4 +1,4 @@
-﻿@model CinePreview.Data.Entidades.Pelicula
+﻿@model CinePreview.Models.CrearPeliculaViewModel
 @{
     ViewData["Title"] = "Create";
 }
@@ -9,15 +9,17 @@
     <div class=" col-md-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class=" text-danger"></div>
+            <input type="hidden" asp-for="Generos" />
             <div class=" form-group">
                 <label asp-for="Titulo" class="control-label"></label>
                 <input asp-for="Titulo" class="form-control" />
                 <span asp-validation-for="Titulo" class="text-danger"></span>
             </div>
-            <div class=" form-group">
-                <label asp-for="Genero" class="control-label"></label>
-                <input asp-for="Genero" class="form-control" />
-                <span asp-validation-for="Genero" class="text-danger"></span>
+            <div class="form-group">
+                <span class="required">*</span>
+                <label asp-for="GeneroId" class="control-label"></label>
+                <select asp-for="GeneroId" asp-items="Model.Generos" class="form-control"></select>
+                <span asp-validation-for="GeneroId" class="text-danger"></span>
             </div>
             <div class=" form-group">
                 <label asp-for="Duracion" class="control-label"></label>
@@ -30,10 +32,9 @@
                 <span asp-validation-for="FechaEstreno" class="text-danger"></span>
             </div>
             <div class=" form-group">
-                <button type ="submit" class=" btn btn-success">Guardar</button>
-                <button type="button" class=" btn btn-primary">Cancelar</button>
+                <button type="submit" class=" btn btn-sm btn-primary">Guardar</button>
+                <a asp-action="Index" class=" btn btn-sm btn-success">Cancelar</a>
             </div>
         </form>
     </div>
 </div>
-
