@@ -20,5 +20,6 @@ namespace CinePreview.Data.Entidades
         [DisplayFormat(DataFormatString = "{0:C2}")]        
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public decimal Precio { get; set; }
+
     }
 }
