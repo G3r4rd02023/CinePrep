@@ -1,6 +1,7 @@
 ﻿@model CinePreview.Models.CrearPeliculaViewModel
 @{
     ViewData["Title"] = "Create";
+    Layout = null;
 }
 
 <h5>Crear Pelicula</h5>
@@ -33,8 +34,16 @@
             </div>
             <div class=" form-group">
                 <button type="submit" class=" btn btn-sm btn-primary">Guardar</button>
-                <a asp-action="Index" class=" btn btn-sm btn-success">Cancelar</a>
+                <a asp-action="Index" class=" btn btn-sm btn-success" onclick="mostrarSweetAlert2()">Cancelar</a>
             </div>
         </form>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        function mostrarSweetAlert2() {
+            Swal.fire('Excelente', 'Registro agregado exitosamente', 'success');
+        }
+    </script>
+}
