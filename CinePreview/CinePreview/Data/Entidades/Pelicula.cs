@@ -16,6 +16,9 @@ namespace CinePreview.Data.Entidades
         [Display(Name = "Duración")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int Duracion { get; set; }
+        public string Director { get; set; }
+        public string Elenco { get; set; }
+        public string Sinopsis { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
         [Display(Name = "Fecha de Estreno")]
